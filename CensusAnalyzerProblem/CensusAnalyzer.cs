@@ -1,9 +1,5 @@
 ﻿using System.IO;
 
-using System.Collections.Generic;
-using System;
-using System.Reflection.Metadata.Ecma335;
-
 namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzer
@@ -14,20 +10,14 @@ namespace CensusAnalyzerProblem
 
             if (!path.Contains("IndiaStateCensusData"))
                 throw new CensusAnalyzerException("Invalid file ");
-                string[] n = File.ReadAllLines(path);
-     
-                // IEnumerable<string> e = n;
+            if(!path.Equals("IndiaStateCensusData.csv"))
+                throw new CensusAnalyzerException("Invalid file type ");
+            string[] n = File.ReadAllLines(path);
                 for (int i = 0; i < n.Length; i++)
                 {
                     count++;
                 }
                 return count - 1;
             }
-           /* catch(CensusAnalyzerException e)
-            {
-                 Console.WriteLine(e.Message);
-                *//*throw new CensusAnalyzerException("Invalid file");*//*
-            }
-            return 0;*/
         }
     }

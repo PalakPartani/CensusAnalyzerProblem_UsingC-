@@ -7,9 +7,9 @@ namespace CensusAnalyzerTest
         [SetUp]
         public void Setup()
         {
-           
+
         }
-        
+
 
         [Test]
         public void Test1()
@@ -31,9 +31,22 @@ namespace CensusAnalyzerTest
             }
             catch (CensusAnalyzerException e)
             {
-                Assert.AreEqual("Invalid file ",e.exceptionMessage);
+                Assert.AreEqual("Invalid file ", e.exceptionMessage);
             }
-
+        }
+        [Test]
+        public void givenWrongFileType_ShouldThrowCustomException()
+        {
+            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.java";
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+            try
+            {
+                int count = censusAnalyzer.getCount(path);
+            }
+            catch (CensusAnalyzerException e)
+            {
+                Assert.AreEqual("Invalid file type ", e.exceptionMessage);
+            }
         }
     }
 }
