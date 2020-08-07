@@ -1,0 +1,9 @@
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\bin\Debug\netcoreapp3.1\CensusAnalyzerProblem.deps.json
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\bin\Debug\netcoreapp3.1\CensusAnalyzerProblem.dll
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\bin\Debug\netcoreapp3.1\CensusAnalyzerProblem.pdb
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.csprojAssemblyReference.cache
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.AssemblyInfoInputs.cache
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.AssemblyInfo.cs
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.csproj.CoreCompileInputs.cache
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.dll
+C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerProblem\obj\Debug\netcoreapp3.1\CensusAnalyzerProblem.pdb
