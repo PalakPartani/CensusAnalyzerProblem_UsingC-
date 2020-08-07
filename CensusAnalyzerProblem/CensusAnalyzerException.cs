@@ -6,7 +6,7 @@ namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzerException:Exception
     {
-        string exceptionMessage;
+         public string exceptionMessage;
         public CensusAnalyzerException(string exceptionMessage)
         {
             this.exceptionMessage = exceptionMessage;

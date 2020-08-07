@@ -9,7 +9,7 @@ namespace CensusAnalyzerTest
         {
            
         }
-        string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusDataa.csv";
+        
 
         [Test]
         public void Test1()
@@ -20,9 +20,10 @@ namespace CensusAnalyzerTest
             Assert.AreEqual(count, 29);
         }
 
-       /* [Test]
+        [Test]
         public void givenWrongFilePath_ShouldThrowCustomException()
         {
+            string path = @"C:\Users\Palak Rubi\Desktop\IndiaCensusDataa.csv";
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
@@ -30,9 +31,9 @@ namespace CensusAnalyzerTest
             }
             catch (CensusAnalyzerException e)
             {
-                Assert.AreEqual(censusAnalyzer.getCount(path), "Invalid file ");
+                Assert.AreEqual("Invalid file ",e.exceptionMessage);
             }
 
-        }*/
+        }
     }
 }
