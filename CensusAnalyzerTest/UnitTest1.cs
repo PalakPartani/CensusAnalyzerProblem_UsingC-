@@ -48,5 +48,21 @@ namespace CensusAnalyzerTest
                 Assert.AreEqual("Invalid file type ", e.exceptionMessage);
             }
         }
+        [Test]
+        public void givenWrongFileDelimiter_ShouldThrowCustomException()
+        {
+            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+            try
+            {
+               /*censusAnalyzer.checkDelimiter("")*/
+
+                int count = censusAnalyzer.getCount(path);
+            }
+            catch (CensusAnalyzerException e)
+            {
+                Assert.AreEqual("Invalid file delimiter ", e.exceptionMessage);
+            }
+        }
     }
 }
