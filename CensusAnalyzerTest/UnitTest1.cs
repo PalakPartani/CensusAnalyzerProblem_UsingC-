@@ -55,13 +55,25 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-               /*censusAnalyzer.checkDelimiter("")*/
-
                 int count = censusAnalyzer.getCount(path);
             }
             catch (CensusAnalyzerException e)
             {
                 Assert.AreEqual("Invalid file delimiter ", e.exceptionMessage);
+            }
+        }
+        [Test]
+        public void givenWrongFileHeader_ShouldThrowCustomException()
+        {
+            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+            try
+            {
+                int count = censusAnalyzer.getCount(path);
+            }
+            catch (CensusAnalyzerException e)
+            {
+                Assert.AreEqual("Invalid file Header ", e.exceptionMessage);
             }
         }
     }

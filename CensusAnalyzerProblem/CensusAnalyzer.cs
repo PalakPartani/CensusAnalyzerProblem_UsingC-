@@ -15,8 +15,9 @@ namespace CensusAnalyzerProblem
                 throw new CensusAnalyzerException("Invalid file type ");
             
             string[] n = File.ReadAllLines(path);
-
-            foreach(string d in n)
+            if(n[0]!= "State,Population,AreaInSqKm,DensityPerSqKm")
+                throw new CensusAnalyzerException("Invalid file delimiter ");
+            foreach (string d in n)
             {
                 if (!d.Contains(','))
                     throw new CensusAnalyzerException("Invalid file delimiter ");
