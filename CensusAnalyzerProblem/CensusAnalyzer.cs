@@ -7,8 +7,6 @@ namespace CensusAnalyzerProblem
         public int getCount(string path)
         {
             int count = 0;
-         
-
             if (!path.Contains("IndiaStateCensusData"))
                 throw new CensusAnalyzerException("Invalid file ");
             if(!path.Contains("csv"))
@@ -16,7 +14,7 @@ namespace CensusAnalyzerProblem
             
             string[] n = File.ReadAllLines(path);
             if(n[0]!= "State,Population,AreaInSqKm,DensityPerSqKm")
-                throw new CensusAnalyzerException("Invalid file delimiter ");
+                throw new CensusAnalyzerException("Invalid file header ");
             foreach (string d in n)
             {
                 if (!d.Contains(','))
@@ -29,5 +27,17 @@ namespace CensusAnalyzerProblem
                 }
                 return count - 1;
             }
+        public int getStateCount(string path)
+        {
+            int count = 0;
+            string[] n = File.ReadAllLines(path);
+            for (int i = 0; i < n.Length; i++)
+            {
+                count++;
+            }
+            return count - 1;
         }
+
     }
+    }
+ 

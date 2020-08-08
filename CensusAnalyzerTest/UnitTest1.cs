@@ -4,6 +4,10 @@ namespace CensusAnalyzerTest
 {
     public class Tests
     {
+        string censusFilePath = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+        string censusWrongPath = @"C:\Users\Palak Rubi\Desktop\IndiaCensusDataa.csv";
+        string censusWrongType = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.java";
+        string stateCodeFilePath = @"C:\Users\Palak Rubi\Desktop\IndiaStateCode.csv";
         [SetUp]
         public void Setup()
         {
@@ -14,20 +18,20 @@ namespace CensusAnalyzerTest
         [Test]
         public void Test1()
         {
-            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+          
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            int count = censusAnalyzer.getCount(path);
+            int count = censusAnalyzer.getCount(censusFilePath);
             Assert.AreEqual(count, 29);
         }
 
         [Test]
         public void givenWrongFilePath_ShouldThrowCustomException()
         {
-            string path = @"C:\Users\Palak Rubi\Desktop\IndiaCensusDataa.csv";
+           
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(path);
+                int count = censusAnalyzer.getCount(censusWrongPath);
             }
             catch (CensusAnalyzerException e)
             {
@@ -37,11 +41,11 @@ namespace CensusAnalyzerTest
         [Test]
         public void givenWrongFileType_ShouldThrowCustomException()
         {
-            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.java";
+          
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(path);
+                int count = censusAnalyzer.getCount(censusWrongType);
             }
             catch (CensusAnalyzerException e)
             {
@@ -51,11 +55,11 @@ namespace CensusAnalyzerTest
         [Test]
         public void givenWrongFileDelimiter_ShouldThrowCustomException()
         {
-            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+           
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(path);
+                int count = censusAnalyzer.getCount(censusFilePath);
             }
             catch (CensusAnalyzerException e)
             {
@@ -65,16 +69,27 @@ namespace CensusAnalyzerTest
         [Test]
         public void givenWrongFileHeader_ShouldThrowCustomException()
         {
-            string path = @"C:\Users\Palak Rubi\Desktop\IndiaStateCensusData.csv";
+         
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(path);
+                int count = censusAnalyzer.getCount(censusFilePath);
             }
             catch (CensusAnalyzerException e)
             {
                 Assert.AreEqual("Invalid file Header ", e.exceptionMessage);
             }
         }
+        [Test]
+        public void givenIndiaStateCode_ShouldReturnNumberOfResult()
+        {
+
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+           
+                int count = censusAnalyzer.getStateCount(stateCodeFilePath);
+                Assert.AreEqual(37, count);
+          
+        }
+
     }
 }
