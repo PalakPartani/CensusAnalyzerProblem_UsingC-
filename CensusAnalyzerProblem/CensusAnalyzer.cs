@@ -1,20 +1,21 @@
 ﻿using System.IO;
+using System.Linq;
 
 namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzer
     {
-        public int getCount(string path)
+        public int loadData(string path,string headers)
         {
             int count = 0;
-            if (!path.Contains("IndiaStateCensusData"))
+           if(!File.Exists(path))
                 throw new CensusAnalyzerException("Invalid file ",CensusAnalyzerException.ExceptionType.NOT_FOUND);
-            if(!path.Contains("csv"))
+            if(Path.GetExtension(path)!=".csv")
                 throw new CensusAnalyzerException("Invalid file type ",CensusAnalyzerException.ExceptionType.INVALID_TYPE);
             
             string[] data = File.ReadAllLines(path);
             
-            if(data[0]!= "State,Population,AreaInSqKm,DensityPerSqKm")
+            if(data[0]!= headers)
                 throw new CensusAnalyzerException("Invalid file header ", CensusAnalyzerException.ExceptionType.INVALID_HEADER);
             foreach (string d in data)
             {
@@ -28,7 +29,7 @@ namespace CensusAnalyzerProblem
                 }
                 return count - 1;
             }
-        public int getStateCount(string path)
+       /* public int getStateCount(string path)
         {
             int count = 0;
             if (!path.Contains("IndiaStateCode"))
@@ -51,6 +52,6 @@ namespace CensusAnalyzerProblem
                 count++;
             }
             return count - 1;
-        }
+        }*/
     }
 }

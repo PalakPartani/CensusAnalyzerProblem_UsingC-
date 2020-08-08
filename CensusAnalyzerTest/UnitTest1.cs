@@ -6,9 +6,11 @@ namespace CensusAnalyzerTest
     {
         string censusFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCensusData.csv";
         string censusWrongPath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaCensusDataa.csv";
-        string censusWrongType = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCensusData.java";
+        string censusWrongType = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCensusData.txt";
         string stateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCode.csv";
-        string wrongstateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCode.jpg";
+        string wrongstateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCode.txt";
+        static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
+        static string indianStateCodeHeaders = "SrNo,State Name,TIN,StateCode";
         [SetUp]
         public void Setup()
         {
@@ -19,7 +21,7 @@ namespace CensusAnalyzerTest
         public void givenCensusFile_shouldReturnCorrectNumberOfRecords()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            int count = censusAnalyzer.getCount(censusFilePath);
+            int count = censusAnalyzer.loadData(censusFilePath,indianStateCensusHeaders);
             Assert.AreEqual(count, 29);
         }
 
@@ -29,7 +31,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(censusWrongPath);
+                int count = censusAnalyzer.loadData(censusWrongPath, indianStateCensusHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -42,7 +44,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(censusWrongType);
+                int count = censusAnalyzer.loadData(censusWrongType, indianStateCensusHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -55,7 +57,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(censusFilePath);
+                int count = censusAnalyzer.loadData(censusFilePath, indianStateCensusHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -68,7 +70,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getCount(censusFilePath);
+                int count = censusAnalyzer.loadData(censusFilePath, indianStateCensusHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -79,7 +81,7 @@ namespace CensusAnalyzerTest
         public void givenIndiaStateCode_ShouldReturnNumberOfResult()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            int count = censusAnalyzer.getStateCount(stateCodeFilePath);
+            int count = censusAnalyzer.loadData(stateCodeFilePath, indianStateCodeHeaders);
             Assert.AreEqual(37, count);
         }
         [Test]
@@ -88,7 +90,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getStateCount(censusWrongPath);
+                int count = censusAnalyzer.loadData(censusWrongPath, indianStateCodeHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -101,7 +103,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getStateCount(wrongstateCodeFilePath);
+                int count = censusAnalyzer.loadData(wrongstateCodeFilePath, indianStateCodeHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -114,7 +116,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getStateCount(stateCodeFilePath);
+                int count = censusAnalyzer.loadData(stateCodeFilePath, indianStateCodeHeaders);
             }
             catch (CensusAnalyzerException e)
             {
@@ -127,7 +129,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             try
             {
-                int count = censusAnalyzer.getStateCount(stateCodeFilePath);
+                int count = censusAnalyzer.loadData(stateCodeFilePath, indianStateCodeHeaders);
             }
             catch (CensusAnalyzerException e)
             {
