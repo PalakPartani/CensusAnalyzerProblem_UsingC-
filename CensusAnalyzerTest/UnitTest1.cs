@@ -16,7 +16,7 @@ namespace CensusAnalyzerTest
         }
 
         [Test]
-        public void Test1()
+        public void givenCensusFile_shouldReturnCorrectNumberOfRecords()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
             int count = censusAnalyzer.getCount(censusFilePath);
