@@ -1,5 +1,8 @@
 using NUnit.Framework;
 using CensusAnalyzerProblem;
+using System.Collections.Generic;
+
+using System.Linq;
 namespace CensusAnalyzerTest
 {
     public class Tests
@@ -11,6 +14,10 @@ namespace CensusAnalyzerTest
         string wrongstateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\IndiaStateCode.txt";
         static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
         static string indianStateCodeHeaders = "SrNo,State Name,TIN,StateCode";
+        static string wrongStateCodeHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\WrongDelimiter.csv";
+        static string wrongStateCodeDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\WrongStateCodeHeader.csv";
+        static string wrongCensusHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\WrongCensusHeader.csv";
+        static string wrongCensusDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\WrongCensusDelimiter.csv";
         [SetUp]
         public void Setup()
         {
@@ -29,54 +36,42 @@ namespace CensusAnalyzerTest
         public void givenWrongFilePath_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(censusWrongPath, indianStateCensusHeaders);
+           
+                var count = Assert.Throws<CensusAnalyzerException>(()=>censusAnalyzer.loadData(censusWrongPath, indianStateCensusHeaders));
+         
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file ", e.exceptionMessage);
-            }
-        }
+    
         [Test]
         public void givenWrongFileType_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(censusWrongType, indianStateCensusHeaders);
-            }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file type ", e.exceptionMessage);
-            }
+           
+                var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(censusWrongType, indianStateCensusHeaders));
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE,count.type);
+          
         }
         [Test]
         public void givenWrongFileDelimiter_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(censusFilePath, indianStateCensusHeaders);
+
+            var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(wrongCensusDelimiter, indianStateCensusHeaders));
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER,count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file delimiter ", e.exceptionMessage);
-            }
-        }
+        
         [Test]
         public void givenWrongFileHeader_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(censusFilePath, indianStateCensusHeaders);
+
+            var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(wrongCensusHeader, indianStateCensusHeaders));
+           
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER,count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file Header ", e.exceptionMessage);
-            }
-        }
+        
         [Test]
         public void givenIndiaStateCode_ShouldReturnNumberOfResult()
         {
@@ -88,53 +83,41 @@ namespace CensusAnalyzerTest
         public void givenWrongStatecodeFilePath_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(censusWrongPath, indianStateCodeHeaders);
+
+            var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(censusWrongPath, indianStateCodeHeaders));
+            
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file ", e.exceptionMessage);
-            }
-        }
+        
         [Test]
         public void givenWrongStatecodeFileType_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(wrongstateCodeFilePath, indianStateCodeHeaders);
+
+            var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(wrongstateCodeFilePath, indianStateCodeHeaders));
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file type ", e.exceptionMessage);
-            }
-        }
+        
         [Test]
         public void givenWrongStateCodeFileDelimiter_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(stateCodeFilePath, indianStateCodeHeaders);
+
+        var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(wrongStateCodeDelimiter, indianStateCodeHeaders));
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
             }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file delimiter ", e.exceptionMessage);
-            }
-        }
+        
         [Test]
         public void givenWrongStatecodeFileHeader_ShouldThrowCustomException()
         {
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
-            try
-            {
-                int count = censusAnalyzer.loadData(stateCodeFilePath, indianStateCodeHeaders);
-            }
-            catch (CensusAnalyzerException e)
-            {
-                Assert.AreEqual("Invalid file Header ", e.exceptionMessage);
+
+            var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData(wrongStateCodeHeader, indianStateCodeHeaders));
+            
+                Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
             }
         }
     }
-}
