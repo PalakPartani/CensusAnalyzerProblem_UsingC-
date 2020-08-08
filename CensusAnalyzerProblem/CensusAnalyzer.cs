@@ -5,7 +5,26 @@ namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzer
     {
-        public int loadData(string path,string headers)
+        string path;
+        string headers;
+        public CensusAnalyzer(string path, string headers)
+        {
+            this.path = path;
+            this.headers =headers;
+        }
+       /* public int loadData()
+        {
+            int count = 0;
+            string[] data = File.ReadAllLines(this.path);
+            for (int i = 0; i < data.Length; i++)
+            {
+                count++;
+            }
+            return count - 1;
+        }*/
+
+    
+            public int loadData()
         {
             int count = 0;
            if(!File.Exists(path))
