@@ -1,12 +1,13 @@
 ﻿using System.IO;
-using System.Linq;
 
 namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzer
     {
+        public delegate int CSVData();
         string path;
         string headers;
+        
         public CensusAnalyzer(string path, string headers)
         {
             this.path = path;
