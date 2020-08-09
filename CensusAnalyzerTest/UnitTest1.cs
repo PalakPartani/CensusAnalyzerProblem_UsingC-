@@ -27,8 +27,12 @@ namespace CensusAnalyzerTest
         [Test]
         public void givenCensusFile_shouldReturnCorrectNumberOfRecords()
         {
-            censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
-            CSVData count = new CSVData(censusAnalyzer.loadData);
+
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte =(CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            // censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            //   CSVData count = new CSVData(censusAnalyzer.loadData);
             int c = (int)count();
            // int count = censusAnalyzer.loadData();
             Assert.AreEqual(c, 29);
@@ -37,101 +41,130 @@ namespace CensusAnalyzerTest
         [Test]
         public void givenWrongFilePath_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(censusWrongPath, indianStateCensusHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusWrongPath, indianStateCensusHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            //censusAnalyzer = new CensusAnalyzer(censusWrongPath, indianStateCensusHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
             
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
-            System.Console.WriteLine(count.type);
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
+            System.Console.WriteLine(countt.type);
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, countt.type);
         }
 
         [Test]
         public void givenWrongFileType_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(censusWrongType, indianStateCensusHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusWrongType, indianStateCensusHeaders);
+            CSVData count = new CSVData(counte.loadData);
+          //  censusAnalyzer = new CensusAnalyzer(censusWrongType, indianStateCensusHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() =>countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() =>count());
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, countt.type);
 
         }
         [Test]
         public void givenWrongFileDelimiter_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(wrongCensusDelimiter, indianStateCensusHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", wrongCensusDelimiter, indianStateCensusHeaders);
+            CSVData count = new CSVData(counte.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+           // censusAnalyzer = new CensusAnalyzer(wrongCensusDelimiter, indianStateCensusHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
+
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
            // var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, countt.type);
         }
 
         [Test]
         public void givenWrongFileHeader_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(wrongCensusHeader, indianStateCensusHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", wrongCensusHeader, indianStateCensusHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            // censusAnalyzer = new CensusAnalyzer(wrongCensusHeader, indianStateCensusHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
            // var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, countt.type);
         }
 
         [Test]
         public void givenIndiaStateCode_ShouldReturnNumberOfResult()
         {
-            censusAnalyzer = new CensusAnalyzer(stateCodeFilePath, indianStateCodeHeaders);
-            int count = censusAnalyzer.loadData();
-            Assert.AreEqual(37, count);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", stateCodeFilePath, indianStateCodeHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            int c = (int)count();
+            /* censusAnalyzer = new CensusAnalyzer(stateCodeFilePath, indianStateCodeHeaders);
+             int count = censusAnalyzer.loadData();*/
+            Assert.AreEqual(37, c);
         }
         [Test]
         public void givenWrongStatecodeFilePath_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(censusWrongPath, indianStateCodeHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusWrongPath, indianStateCodeHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            //censusAnalyzer = new CensusAnalyzer(censusWrongPath, indianStateCodeHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
             // var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.NOT_FOUND, countt.type);
         }
 
         [Test]
         public void givenWrongStatecodeFileType_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(wrongstateCodeFilePath, indianStateCodeHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", wrongstateCodeFilePath, indianStateCodeHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            // censusAnalyzer = new CensusAnalyzer(wrongstateCodeFilePath, indianStateCodeHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
             //  var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, countt.type);
         }
 
         [Test]
         public void givenWrongStateCodeFileDelimiter_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(wrongStateCodeDelimiter, indianStateCodeHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", wrongStateCodeDelimiter, indianStateCodeHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            //censusAnalyzer = new CensusAnalyzer(wrongStateCodeDelimiter, indianStateCodeHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
             // var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
 
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, countt.type);
         }
 
         [Test]
         public void givenWrongStatecodeFileHeader_ShouldThrowCustomException()
         {
-            censusAnalyzer = new CensusAnalyzer(wrongStateCodeHeader, indianStateCodeHeaders);
-            CSVData countt = new CSVData(censusAnalyzer.loadData);
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", wrongStateCodeHeader, indianStateCodeHeaders);
+            CSVData count = new CSVData(counte.loadData);
+            // censusAnalyzer = new CensusAnalyzer(wrongStateCodeHeader, indianStateCodeHeaders);
+            //CSVData countt = new CSVData(censusAnalyzer.loadData);
 
-            var count = Assert.Throws<CensusAnalyzerException>(() => countt());
+            var countt = Assert.Throws<CensusAnalyzerException>(() => count());
             //var count = Assert.Throws<CensusAnalyzerException>(() => censusAnalyzer.loadData());
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, count.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, countt.type);
         }
     }
 }
