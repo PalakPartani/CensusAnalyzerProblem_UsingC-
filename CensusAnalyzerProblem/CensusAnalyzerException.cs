@@ -15,14 +15,5 @@ namespace CensusAnalyzerProblem
             this.exceptionMessage = exceptionMessage;
             this.type = type;
         }
-
-
-        /*public override string Message
-        {
-            get
-            {
-                return this.exceptionMessage;
-            }
-        }*/
     }
 }

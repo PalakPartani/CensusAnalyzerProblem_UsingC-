@@ -8,7 +8,6 @@ namespace CensusAnalyzerProblem
     {
         public ICSVBuilder CreateObject(string ClassName,string path,string headers)
         {
-          //  string path, header;
             if (ClassName== "CensusAnalyzer")
             {
                 return new CensusAnalyzer(path,headers);

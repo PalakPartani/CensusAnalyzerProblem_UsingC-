@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CensusAnalyzerProblem
 {
@@ -22,20 +24,21 @@ namespace CensusAnalyzerProblem
                 throw new CensusAnalyzerException("Invalid file type ",CensusAnalyzerException.ExceptionType.INVALID_TYPE);
             
             string[] data = File.ReadAllLines(path);
-            
-            if(data[0]!= headers)
+            List<string> list = data.ToList();
+            if (data[0]!= headers)
                 throw new CensusAnalyzerException("Invalid file header ", CensusAnalyzerException.ExceptionType.INVALID_HEADER);
-            foreach (string d in data)
+            foreach (string d in list)
             {
                 if (!d.Contains(','))
                     throw new CensusAnalyzerException("Invalid file delimiter ", CensusAnalyzerException.ExceptionType.INVALID_DELIMITER);
             }
             
-            for (int i = 0; i < data.Length; i++)
+           /* for (int i = 0; i < data.Length; i++)
                 {
                     count++;
-                }
-                return count - 1;
+                }*/
+            //return count - 1;
+            return data.Skip(1).ToList();
             }
     }
 }
