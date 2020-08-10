@@ -3,8 +3,6 @@ using CensusAnalyzerProblem;
 using static CensusAnalyzerProblem.CensusAnalyzer;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Text;
-using System.Linq;
 namespace CensusAnalyzerTest
 {
     public class Tests
@@ -21,7 +19,7 @@ namespace CensusAnalyzerTest
         static string wrongCensusHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongCensusHeader.csv";
         static string wrongCensusDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongCensusDelimiter.csv";
         static string newFile = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\newFile.csv";
-
+      
         List<string> list = new List<string>();
         [SetUp]
         public void Setup()
@@ -60,6 +58,7 @@ namespace CensusAnalyzerTest
             Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_TYPE, error.type);
 
         }
+
         [Test]
         public void givenIndianCensusCSVFile_WhenFileFormatIsCorrectButDelimeterIsWrong_ShouldThrowException()
         {
@@ -90,6 +89,7 @@ namespace CensusAnalyzerTest
             list = (List<string>)count();
             Assert.AreEqual(37, list.Count);
         }
+
         [Test]
         public void givenIndianStateCodeCSVFile_WhenFileNotExist_ShouldThrowFileNotFoundException()
         {
@@ -137,9 +137,20 @@ namespace CensusAnalyzerTest
             CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
             // CSVData count = new CSVData(counte.sortingCSVData);
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
-            string sorted = censusAnalyzer.sortingCSVData(censusFilePath, newFile).ToString();
+            string sorted = censusAnalyzer.sortingCSVData(censusFilePath, newFile,0).ToString();
             string[] d = JsonConvert.DeserializeObject<string[]>(sorted);
             Assert.AreEqual("Andhra Pradesh,49386799,162968,303", d[0]);
+        }
+
+        [Test]
+        public void givenCSVDatatoSortByStateCode_ShouldReturnSortedDataInJsonFormat()
+        {
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            string sorted = censusAnalyzer.sortingCSVData(stateCodeFilePath, newFile,3).ToString();
+            string[] d = JsonConvert.DeserializeObject<string[]>(sorted);
+            Assert.AreEqual("3,Andhra Pradesh New,37,AD", d[0]);
         }
     }
 }

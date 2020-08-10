@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-using System.Text;
+
 
 namespace CensusAnalyzerProblem
 {
@@ -21,7 +19,7 @@ namespace CensusAnalyzerProblem
         }
         public object loadData()
         {
-            int count = 0;
+
             if (!File.Exists(path))
                 throw new CensusAnalyzerException("Invalid file ", CensusAnalyzerException.ExceptionType.NOT_FOUND);
             if (Path.GetExtension(path) != ".csv")
@@ -40,24 +38,19 @@ namespace CensusAnalyzerProblem
             return data.Skip(1).ToList();
         }
 
-        public string sortingCSVData(string path,string newPath)
+        public string sortingCSVData(string path, string newPath, int type)
         {
             string[] data = File.ReadAllLines(path);
             var details = data.Skip(1);
             IEnumerable<string> query =
             from line in details
             let x = line.Split(',')
-            orderby x[0]
+            orderby x[type]
             select line;
             File.WriteAllLines(newPath, data.Take(1).Concat(query.ToArray()));
             List<string> sorted = query.ToList<string>();
             return JsonConvert.SerializeObject(sorted);
-           // Console.WriteLine(data);
-           // string d1=  data[1].Substring(0,14);
-            /*string json = JsonConvert.SerializeObject(data[1]);
-            return json;*/
-           
-
+         
         }
     }
 }

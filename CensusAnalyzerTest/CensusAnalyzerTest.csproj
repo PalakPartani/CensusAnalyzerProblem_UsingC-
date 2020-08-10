@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CensusAnalyzerProblem\CensusAnalyzerProblem.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CSVFiles\" />
+  </ItemGroup>
+
 </Project>
