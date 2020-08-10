@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-
 namespace CensusAnalyzerProblem
 {
     public class CensusAnalyzer : ICSVBuilder
@@ -11,6 +10,9 @@ namespace CensusAnalyzerProblem
         public delegate object CSVData();
         public string path;
         public string headers;
+        int counter=0;
+        Dictionary<int, string> dict = new Dictionary<int, string>();
+
 
         public CensusAnalyzer(string path, string headers)
         {
@@ -33,9 +35,10 @@ namespace CensusAnalyzerProblem
             {
                 if (!d.Contains(','))
                     throw new CensusAnalyzerException("Invalid file delimiter ", CensusAnalyzerException.ExceptionType.INVALID_DELIMITER);
+                counter++;
+                dict.Add(counter, d);
             }
-
-            return data.Skip(1).ToList();
+            return dict.Skip(1).ToDictionary(k=>k.Key,k=>k.Value);
         }
 
         public string sortingCSVData(string path, string newPath, int type)

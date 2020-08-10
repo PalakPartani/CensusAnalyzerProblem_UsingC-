@@ -7,20 +7,21 @@ namespace CensusAnalyzerTest
 {
     public class Tests
     {
-        string censusFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\IndiaStateCensusData.csv";
-        string censusWrongPath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\IndiaCensusDataa.csv";
-        string censusWrongType = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\IndiaStateCensusData.txt";
-        string stateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\IndiaStateCode.csv";
-        string wrongstateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\IndiaStateCode.txt";
+        string censusFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\IndiaStateCensusData.csv";
+        string censusWrongPath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\IndiaCensusDataa.csv";
+        string censusWrongType = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\IndiaStateCensusData.txt";
+        string stateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\IndiaStateCode.csv";
+        string wrongstateCodeFilePath = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\IndiaStateCode.txt";
         static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
         static string indianStateCodeHeaders = "SrNo,State Name,TIN,StateCode";
-        static string wrongStateCodeHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongDelimiter.csv";
-        static string wrongStateCodeDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongStateCodeHeader.csv";
-        static string wrongCensusHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongCensusHeader.csv";
-        static string wrongCensusDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\WrongCensusDelimiter.csv";
-        static string newFile = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CSVFiles\newFile.csv";
+        static string wrongStateCodeHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\WrongDelimiter.csv";
+        static string wrongStateCodeDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\WrongStateCodeHeader.csv";
+        static string wrongCensusHeader = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\WrongCensusHeader.csv";
+        static string wrongCensusDelimiter = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\WrongCensusDelimiter.csv";
+        static string newFile = @"C:\Users\Palak Rubi\source\repos\CensusAnalyzerProblem\CensusAnalyzerTest\CSVFiles\newFile.csv";
       
         List<string> list = new List<string>();
+        Dictionary<int, string> data = new Dictionary<int, string>();
         [SetUp]
         public void Setup()
         {
@@ -33,8 +34,8 @@ namespace CensusAnalyzerTest
             CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
             CensusAnalyzer census = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
             CSVData count = new CSVData(census.loadData);
-            list = (List<string>)count();
-            Assert.AreEqual(29, list.Count);
+            data = (Dictionary<int, string>)count();
+            Assert.AreEqual(29, data.Count);
         }
 
         [Test]
@@ -85,9 +86,8 @@ namespace CensusAnalyzerTest
             CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
             CensusAnalyzer census = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", stateCodeFilePath, indianStateCodeHeaders);
             CSVData count = new CSVData(census.loadData);
-            // int c = (int)count();
-            list = (List<string>)count();
-            Assert.AreEqual(37, list.Count);
+            data = (Dictionary<int, string>)count();
+            Assert.AreEqual(37, data.Count);
         }
 
         [Test]
