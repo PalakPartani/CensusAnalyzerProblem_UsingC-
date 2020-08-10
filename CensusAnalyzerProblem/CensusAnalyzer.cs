@@ -37,11 +37,6 @@ namespace CensusAnalyzerProblem
                     throw new CensusAnalyzerException("Invalid file delimiter ", CensusAnalyzerException.ExceptionType.INVALID_DELIMITER);
             }
 
-            /* for (int i = 0; i < data.Length; i++)
-                 {
-                     count++;
-                 }*/
-            //return count - 1;
             return data.Skip(1).ToList();
         }
 
