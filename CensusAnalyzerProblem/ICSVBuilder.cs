@@ -6,6 +6,6 @@ namespace CensusAnalyzerProblem
 {
    public interface ICSVBuilder
     {
-        public object loadData();
+        public object LoadData();
     }
 }
