@@ -223,5 +223,30 @@ namespace CensusAnalyzerTest
             IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
             Assert.AreEqual("Arunachal Pradesh", d[28].state);
         }
+        [Test]
+        public void givenCSVDatatoSortByLargestArea_ShouldReturnMostPopulationDensityState()
+        {
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            CSVData count = new CSVData(censusAnalyzer.LoadData);
+            censusData = (Dictionary<string, CensusDTO>)count();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "area").ToString();
+            IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
+            Assert.AreEqual("Rajasthan", d[0].state);
+        }
+
+        [Test]
+        public void givenCSVDatatoSortByLargestArea_ShouldReturnLeastPopulationDensityState()
+        {
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            CSVData count = new CSVData(censusAnalyzer.LoadData);
+            censusData = (Dictionary<string, CensusDTO>)count();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "area").ToString();
+            IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
+            Assert.AreEqual("Goa", d[28].state);
+        }
     }
 }
