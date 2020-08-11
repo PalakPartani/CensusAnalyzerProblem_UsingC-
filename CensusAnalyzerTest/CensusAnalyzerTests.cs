@@ -132,7 +132,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
             CSVData count = new CSVData(censusAnalyzer.LoadData);
             censusData = (Dictionary<string, CensusDTO>)count();
-            string sorted = censusAnalyzer.SortingCSVData(censusData, "state").ToString();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "state", SortFieldEnum.SortType.ASCENDING).ToString();
             IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
             Assert.AreEqual("Andhra Pradesh", d[0].state);
         }
@@ -145,7 +145,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
             CSVData count = new CSVData(censusAnalyzer.LoadData);
             censusData = (Dictionary<string, CensusDTO>)count();
-            string sorted = censusAnalyzer.SortingCSVData(censusData, "state").ToString();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "state", SortFieldEnum.SortType.ASCENDING).ToString();
             IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
             Assert.AreEqual("West Bengal", d[28].state);
         }
@@ -157,7 +157,7 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer(stateCodeFilePath, indianStateCodeHeaders);
             CSVData count = new CSVData(censusAnalyzer.LoadData);
             censusData = (Dictionary<string, CensusDTO>)count();
-            string sorted = censusAnalyzer.SortingCSVData(censusData, "stateCode").ToString();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "stateCode", SortFieldEnum.SortType.ASCENDING).ToString();
             StateCodeDao[] indiaStateCodes = JsonConvert.DeserializeObject<StateCodeDao[]>(sorted);
             Assert.AreEqual("AD", indiaStateCodes[0].stateCode);
         }
@@ -169,9 +169,34 @@ namespace CensusAnalyzerTest
             CensusAnalyzer censusAnalyzer = new CensusAnalyzer(stateCodeFilePath, indianStateCodeHeaders);
             CSVData count = new CSVData(censusAnalyzer.LoadData);
             censusData = (Dictionary<string, CensusDTO>)count();
-            string sorted = censusAnalyzer.SortingCSVData(censusData, "stateCode").ToString();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "stateCode",SortFieldEnum.SortType.ASCENDING).ToString();
             StateCodeDao[] indiaStateCodes = JsonConvert.DeserializeObject<StateCodeDao[]>(sorted);
             Assert.AreEqual("WB", indiaStateCodes[36].stateCode);
+        }
+
+        [Test]
+        public void givenCSVDatatoSortByState_ShouldReturnMostPopulousState()
+        {
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            CSVData count = new CSVData(censusAnalyzer.LoadData);
+            censusData = (Dictionary<string, CensusDTO>)count();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "population", SortFieldEnum.SortType.DESCENDING).ToString();
+            IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
+            Assert.AreEqual("Uttar Pradesh", d[0].state);
+        }
+        [Test]
+        public void givenCSVDatatoSortByState_ShouldReturnleastPopulousState()
+        {
+            CSVBuilderFactory cSVBuilderFactory = new CSVBuilderFactory();
+            CensusAnalyzer counte = (CensusAnalyzer)cSVBuilderFactory.CreateObject("CensusAnalyzer", censusFilePath, indianStateCensusHeaders);
+            CensusAnalyzer censusAnalyzer = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
+            CSVData count = new CSVData(censusAnalyzer.LoadData);
+            censusData = (Dictionary<string, CensusDTO>)count();
+            string sorted = censusAnalyzer.SortingCSVData(censusData, "population", SortFieldEnum.SortType.DESCENDING).ToString();
+            IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
+            Assert.AreEqual("Sikkim", d[28].state);
         }
     }
 }

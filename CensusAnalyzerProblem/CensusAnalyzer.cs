@@ -48,7 +48,7 @@ namespace CensusAnalyzerProblem
             return censusDictionary.ToDictionary(k => k.Key, k => k.Value);
         }
 
-        public string SortingCSVData(Dictionary<string,CensusDTO> path, string type)
+        public string SortingCSVData(Dictionary<string,CensusDTO> path, string type, SortFieldEnum.SortType sortType)
         {
           
             var censusData = path;
@@ -64,6 +64,7 @@ namespace CensusAnalyzerProblem
                 case "stateName": return lines.OrderBy(x => x.stateName).ToList();
                 case "stateCode": return lines.OrderBy(x => x.stateCode).ToList();
                 case "state": return lines.OrderBy(x => x.state).ToList();
+                case "population": return lines.OrderByDescending(x => x.population).ToList();
                 default: return lines;
             }
         }
