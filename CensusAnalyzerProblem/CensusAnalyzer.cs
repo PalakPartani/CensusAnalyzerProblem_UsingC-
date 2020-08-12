@@ -10,20 +10,17 @@ namespace CensusAnalyzerProblem
         public delegate object CSVData();
         public string path;
         public string headers;
-        int counter = 0;
         Dictionary<string, CensusDTO> censusDictionary;
 
         public CensusAnalyzer(string path, string headers)
         {
             this.path = path;
             this.headers = headers;
-
         }
 
         public object LoadData()
         {
             censusDictionary = new Dictionary<string, CensusDTO>();
-
             if (!File.Exists(path))
                 throw new CensusAnalyzerException("Invalid file ", CensusAnalyzerException.ExceptionType.NOT_FOUND);
             if (Path.GetExtension(path) != ".csv")
@@ -32,25 +29,23 @@ namespace CensusAnalyzerProblem
             List<string> list = data.ToList();
             if (data[0] != headers)
                 throw new CensusAnalyzerException("Invalid file header ", CensusAnalyzerException.ExceptionType.INVALID_HEADER);
-
             foreach (string d in list.Skip(1))
             {
                 if (!d.Contains(','))
                     throw new CensusAnalyzerException("Invalid file delimiter ", CensusAnalyzerException.ExceptionType.INVALID_DELIMITER);
-                
                 string[] column = d.Split(",");
-
                 if (path.Contains("IndiaStateCode.csv"))
                     censusDictionary.Add(column[1], new CensusDTO(new StateCodeDao(column[0], column[1], column[2], column[3])));
                 if (path.Contains("IndiaStateCensusData.csv"))
                     censusDictionary.Add(column[0], new CensusDTO(new IndiaCensusDAO(column[0], column[1], column[2], column[3])));
+                if (path.Contains("USCensusData.csv"))
+                    censusDictionary.Add(column[0], new CensusDTO(new USCensusDao(column[0], column[1], column[2], column[3], column[4], column[5], column[6], column[7], column[8])));
             }
             return censusDictionary.ToDictionary(k => k.Key, k => k.Value);
         }
 
         public string SortingCSVData(Dictionary<string,CensusDTO> path, string type)
         {
-          
             var censusData = path;
             List<CensusDTO> lines = censusData.Values.ToList();
             List<CensusDTO> lists = getField(type, lines);
@@ -67,8 +62,6 @@ namespace CensusAnalyzerProblem
                 case "population": return lines.OrderByDescending(x => x.population).ToList();
                 case "populationDensity": return lines.OrderByDescending(x => x.density).ToList();
                 case "area": return lines.OrderByDescending(x => x.area).ToList();
-
-
                 default: return lines;
             }
         }
