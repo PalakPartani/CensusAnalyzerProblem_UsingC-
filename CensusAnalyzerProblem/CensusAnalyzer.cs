@@ -41,7 +41,10 @@ namespace CensusAnalyzerProblem
                 case "state": return lines.OrderBy(x => x.state).ToList();
                 case "population": return lines.OrderByDescending(x => x.population).ToList();
                 case "populationDensity": return lines.OrderByDescending(x => x.density).ToList();
+                case "uspopulationDensity": return lines.OrderByDescending(x => x.populationDensity).ToList();
                 case "area": return lines.OrderByDescending(x => x.area).ToList();
+                case "USarea":return lines.OrderByDescending(x => x.totalArea).ToList();
+
                 default: return lines;
             }
         }

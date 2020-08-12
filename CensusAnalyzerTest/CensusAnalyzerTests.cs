@@ -65,7 +65,7 @@ namespace CensusAnalyzerTest
         {
             CensusAnalyzer census = new CensusAnalyzer(wrongCensusDelimiter, indianStateCensusHeaders);
             var error = Assert.Throws<CensusAnalyzerException>(() => census.LoadCensusData(Country.CountryName.INDIA));
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, error.type);
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_DELIMITER, error.type);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace CensusAnalyzerTest
         [Test]
         public void GivenCSVDatatoSortByStateCode_ShouldReturnSortedDataInJsonFormat()
         {
-            CensusAnalyzer census = new CensusAnalyzer(censusFilePath, indianStateCodeHeaders);
+            CensusAnalyzer census = new CensusAnalyzer(censusFilePath, indianStateCensusHeaders);
             censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.INDIA);
             string sorted = census.SortingCSVData(censusData, "state").ToString();
             IndiaCensusDAO[] d = JsonConvert.DeserializeObject<IndiaCensusDAO[]>(sorted);
@@ -237,9 +237,9 @@ namespace CensusAnalyzerTest
         [Test]
         public void GivenUSCensusCSVFile_WhenFileFormatIsCorrectButDelimeterIsWrong_ShouldThrowException()
         {
-            CensusAnalyzer census = new CensusAnalyzer(wrongStateCodeDelimiter,usCodeHeaders);
-            var error = Assert.Throws<CensusAnalyzerException>(() => census.LoadCensusData(Country.CountryName.US));
-            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, error.type);
+            CensusAnalyzer census = new CensusAnalyzer(wrongCensusDelimiter,indianStateCensusHeaders);
+            var error = Assert.Throws<CensusAnalyzerException>(() => census.LoadCensusData(Country.CountryName.INDIA));
+            Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_DELIMITER, error.type);
         }
 
         [Test]
@@ -268,6 +268,24 @@ namespace CensusAnalyzerTest
             USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
             Assert.AreEqual("Wyoming", sortedResult[50].stateName);
         }
+        [Test]
+        public void GivenUSCSVDatatoSortByPopulationDensity_ShouldReturnMostPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "uspopulationDensity").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("District of Columbia", sortedResult[0].stateName);
+        }
 
+        [Test]
+        public void GivenUSCSVDatatoSortByPopulationDensity_ShouldReturnleastPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "uspopulationDensity").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("Alaska", sortedResult[50].stateName);
+        }
     }
 }
