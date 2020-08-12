@@ -249,5 +249,25 @@ namespace CensusAnalyzerTest
             var error = Assert.Throws<CensusAnalyzerException>(() => census.LoadCensusData(Country.CountryName.US));
             Assert.AreEqual(CensusAnalyzerException.ExceptionType.INVALID_HEADER, error.type);
         }
+        [Test]
+        public void GivenUSCSVDatatoSortByPopulation_ShouldReturnMostPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "population").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("California", sortedResult[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCSVDatatoSortByPopulation_ShouldReturnleastPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "population").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("Wyoming", sortedResult[50].stateName);
+        }
+
     }
 }
