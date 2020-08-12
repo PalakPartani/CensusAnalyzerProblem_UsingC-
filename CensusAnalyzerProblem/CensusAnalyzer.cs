@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace CensusAnalyzerProblem
 {
-    public class CensusAnalyzer : ICSVBuilder
+    public class CensusAnalyzer 
     {
         public delegate object CSVData();
         public string path;
@@ -18,35 +18,15 @@ namespace CensusAnalyzerProblem
             this.headers = headers;
         }
 
-        public object LoadData()
+        public Dictionary<string, CensusDTO> LoadCensusData(Country.CountryName country)
         {
-            censusDictionary = new Dictionary<string, CensusDTO>();
-            if (!File.Exists(path))
-                throw new CensusAnalyzerException("Invalid file ", CensusAnalyzerException.ExceptionType.NOT_FOUND);
-            if (Path.GetExtension(path) != ".csv")
-                throw new CensusAnalyzerException("Invalid file type ", CensusAnalyzerException.ExceptionType.INVALID_TYPE);
-            string[] data = File.ReadAllLines(path);
-            List<string> list = data.ToList();
-            if (data[0] != headers)
-                throw new CensusAnalyzerException("Invalid file header ", CensusAnalyzerException.ExceptionType.INVALID_HEADER);
-            foreach (string d in list.Skip(1))
-            {
-                if (!d.Contains(','))
-                    throw new CensusAnalyzerException("Invalid file delimiter ", CensusAnalyzerException.ExceptionType.INVALID_DELIMITER);
-                string[] column = d.Split(",");
-                if (path.Contains("IndiaStateCode.csv"))
-                    censusDictionary.Add(column[1], new CensusDTO(new StateCodeDao(column[0], column[1], column[2], column[3])));
-                if (path.Contains("IndiaStateCensusData.csv"))
-                    censusDictionary.Add(column[0], new CensusDTO(new IndiaCensusDAO(column[0], column[1], column[2], column[3])));
-                if (path.Contains("USCensusData.csv"))
-                    censusDictionary.Add(column[0], new CensusDTO(new USCensusDao(column[0], column[1], column[2], column[3], column[4], column[5], column[6], column[7], column[8])));
-            }
-            return censusDictionary.ToDictionary(k => k.Key, k => k.Value);
+            censusDictionary = new AdapterFactory().getCountryCensusData(country, path, headers);
+            return censusDictionary;
         }
 
-        public string SortingCSVData(Dictionary<string,CensusDTO> path, string type)
+        public string SortingCSVData(Dictionary<string,CensusDTO> data, string type)
         {
-            var censusData = path;
+            var censusData = data;
             List<CensusDTO> lines = censusData.Values.ToList();
             List<CensusDTO> lists = getField(type, lines);
             return JsonConvert.SerializeObject(lists);

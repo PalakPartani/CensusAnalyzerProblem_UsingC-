@@ -6,7 +6,6 @@ namespace CensusAnalyzerProblem
 {
    public class CensusDTO
     {
-
         public int srNo;
         public string stateName;
         public string state;
