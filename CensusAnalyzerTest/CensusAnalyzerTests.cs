@@ -273,7 +273,7 @@ namespace CensusAnalyzerTest
         {
             CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
             censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
-            string sorted = census.SortingCSVData(censusData, "uspopulationDensity").ToString();
+            string sorted = census.SortingCSVData(censusData, "USPopulationDensity").ToString();
             USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
             Assert.AreEqual("District of Columbia", sortedResult[0].stateName);
         }
@@ -283,9 +283,29 @@ namespace CensusAnalyzerTest
         {
             CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
             censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
-            string sorted = census.SortingCSVData(censusData, "uspopulationDensity").ToString();
+            string sorted = census.SortingCSVData(censusData, "USPopulationDensity").ToString();
             USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
             Assert.AreEqual("Alaska", sortedResult[50].stateName);
+        }
+
+        [Test]
+        public void GivenUSCSVDatatoSortByArea_ShouldReturnMostPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "USArea").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("Alaska", sortedResult[0].stateName);
+        }
+
+        [Test]
+        public void GivenUSCSVDatatoSortByArea_ShouldReturnleastPopulousState()
+        {
+            CensusAnalyzer census = new CensusAnalyzer(usCensusData, usCodeHeaders);
+            censusData = (Dictionary<string, CensusDTO>)census.LoadCensusData(Country.CountryName.US);
+            string sorted = census.SortingCSVData(censusData, "USArea").ToString();
+            USCensusDao[] sortedResult = JsonConvert.DeserializeObject<USCensusDao[]>(sorted);
+            Assert.AreEqual("District of Columbia", sortedResult[50].stateName);
         }
     }
 }
