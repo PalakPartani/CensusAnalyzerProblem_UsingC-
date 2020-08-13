@@ -1,17 +1,28 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
-
+﻿// <copyright file="CensusAnalyzer.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 namespace CensusAnalyzerProblem
 {
-    public class CensusAnalyzer 
+   using System.Collections.Generic;
+   using System.Linq; 
+   using Newtonsoft.Json;
+
+public class CensusAnalyzer
     {
-        public delegate object CSVData();
-        public string path;
-        public string headers;
+        /// <summary>
+        /// Census Analyzer Problem
+        /// </summary>
+       
+        private delegate object CSVData();
+        private string path;
+        private string headers;
         Dictionary<string, CensusDTO> censusDictionary;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="headers"></param>
         public CensusAnalyzer(string path, string headers)
         {
             this.path = path;
@@ -20,11 +31,11 @@ namespace CensusAnalyzerProblem
 
         public Dictionary<string, CensusDTO> LoadCensusData(Country.CountryName country)
         {
-            censusDictionary = new AdapterFactory().getCountryCensusData(country, path, headers);
+            censusDictionary = new AdapterFactory().GetCountryCensusData(country, path, headers);
             return censusDictionary;
         }
 
-        public string SortingCSVData(Dictionary<string,CensusDTO> data, string type)
+        public string SortingCSVData(Dictionary<string, CensusDTO> data, string type)
         {
             var censusData = data;
             List<CensusDTO> lines = censusData.Values.ToList();
@@ -43,11 +54,15 @@ namespace CensusAnalyzerProblem
                 case "populationDensity": return lines.OrderByDescending(x => x.density).ToList();
                 case "USPopulationDensity": return lines.OrderByDescending(x => x.populationDensity).ToList();
                 case "area": return lines.OrderByDescending(x => x.area).ToList();
-                case "USArea":return lines.OrderByDescending(x => x.totalArea).ToList();
+                case "USArea": return lines.OrderByDescending(x => x.totalArea).ToList();
 
                 default: return lines;
             }
         }
+        public string getBothSorted(USCensusDao uSCensus, IndiaCensusDAO indiaCensus)
+        {
+            string sortedState = (uSCensus.populationDensity > indiaCensus.density) ? uSCensus.stateName : indiaCensus.state;
+            return sortedState;
+        }
     }
 }
-       
